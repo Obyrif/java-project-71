@@ -19,7 +19,7 @@ class App implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        // ваша логика обработки файлов
+        // логика обработки файлов
         return 0;
     }
     public static void main(String... args) {
