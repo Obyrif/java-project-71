@@ -1,13 +1,13 @@
 package hexlet.code;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.source.tree.Tree;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Differ {
     public static String generate(Map<String, Object> json1, Map<String, Object> json2) throws Exception {
@@ -23,13 +23,26 @@ public class Differ {
                 }
             }
         }
-
         for (String key: json2.keySet()) {
             if(!json1.containsKey(key)) {
                 diffLine.add("+ " + key + ": " + json2.get(key));
             }
         }
 
-        return String.join("\n", diffLine);
+        return formatDiffSet(diffLine);
+    }
+
+    private static String formatDiffSet(Set<String> diffSet) {
+        if (diffSet.isEmpty()) {
+            return "{}";
+        }
+
+        StringBuilder diff = new StringBuilder("{\n");
+        for (String line : diffSet) {
+            diff.append("  ").append(line).append("\n");
+        }
+        diff.append("}");
+
+        return diff.toString();
     }
 }

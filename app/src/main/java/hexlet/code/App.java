@@ -4,8 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -23,17 +25,22 @@ class App implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        String fileContent1 = Files.readString(Path.of(filepath1));
-        String fileContent2 = Files.readString(Path.of(filepath2));
+        String readFilePath1 = "/Users/obyrif/Desktop/Repository/java-project-71/app/src/main/resources/filepath1.json";
+        String readFilePath2 = "/Users/obyrif/Desktop/Repository/java-project-71/app/src/main/resources/filepath2.json";
+
+        Path path1 = Paths.get(readFilePath1).toAbsolutePath().normalize();
+        Path path2 = Paths.get(readFilePath2).toAbsolutePath().normalize();
+        String content1 = Files.readString(path1);
+        String content2 = Files.readString(path2);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, Object> json1 = objectMapper.readValue(fileContent1, Map.class);
-        Map<String, Object> json2 = objectMapper.readValue(fileContent2, Map.class);
-
+        Map<String, Object> json1 = objectMapper.readValue(content1, Map.class);
+        Map<String, Object> json2 = objectMapper.readValue(content2, Map.class);
         String diff = Differ.generate(json1, json2);
         System.out.println(diff);
         return 0;
     }
+
     public static void main(String... args) {
         int exitCode = new CommandLine(new App()).execute(args);
         System.exit(exitCode);
