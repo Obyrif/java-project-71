@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -40,6 +39,7 @@ class App implements Callable<Integer> {
         System.out.println(diff);
         return 0;
     }
+
 
     public static void main(String... args) {
         int exitCode = new CommandLine(new App()).execute(args);
