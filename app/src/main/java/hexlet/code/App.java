@@ -19,7 +19,8 @@ class App implements Callable<Integer> {
     @CommandLine.Parameters(index = "1", description = "path to second file", paramLabel = "filepath2")
     private String filepath2;
 
-    @CommandLine.Option(names = {"-f", "--format"}, description = "output format [default: stylish]", paramLabel = "format")
+    @CommandLine.Option(names = {"-f", "--format"}, description = "output format [default: stylish]",
+            paramLabel = "format")
     private String format = "stylish";
 
     @Override
