@@ -21,7 +21,7 @@ public class TestDiffer {
         assertEquals(expectedDiff, actualDiff);
     }
     @Test
-    public void testPath() throws Exception {
+    public void testPath() {
         String path1 = "/Users/obyrif/Desktop/Repository/java-project-71/app/src/main/resources/filepath1.json";
         String path2 = "/Users/obyrif/Desktop/Repository/java-project-71/app/src/main/resources/filepath2.json";
 
@@ -32,7 +32,9 @@ public class TestDiffer {
         System.out.println(absolutePath);
         System.out.println(absolutePath2);
 
-        assertTrue(absolutePath.endsWith("/Users/obyrif/Desktop/Repository/java-project-71/app/src/main/resources/filepath1.json"));
-        assertTrue(absolutePath2.endsWith("/Users/obyrif/Desktop/Repository/java-project-71/app/src/main/resources/filepath2.json"));
+        assertTrue(absolutePath.endsWith("/Users/obyrif/Desktop/Repository/java-project-71/app"
+                + "/src/main/resources/filepath1.json"));
+        assertTrue(absolutePath2.endsWith("/Users/obyrif/Desktop/Repository/java-project-71/"
+                + "app/src/main/resources/filepath2.json"));
     }
 }
