@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'checkstyle'
+    id 'jacoco'
 }
 checkstyle {
     toolVersion = "8.45"
@@ -37,6 +38,11 @@ compileJava {
 
 test {
     useJUnitPlatform()
+}
+
+jacoco {
+    toolVersion = "0.8.9"
+    reportsDirectory.set(layout.buildDirectory.dir('customJacocoReportDir'))
 }
 
 tasks {
