@@ -46,10 +46,12 @@ testlogger {
     showSkipped true
     showFailed true
 }
+
 jacocoTestReport {
     dependsOn test
     reports {
         xml.required = true
+        html.required = true
     }
 }
 
