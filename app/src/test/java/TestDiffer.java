@@ -16,11 +16,11 @@ public class TestDiffer {
         absolute = file.getAbsolutePath();
     }
     @Test
-    public void testВasisJson() throws IOException {
+    public void testBasisJson() throws IOException {
         String json1 = absolute + "/testKeyBasisJson1.json";
         String json2 = absolute + "/testKeyBasisJson2.json";
-            String actual = generate(json1, json2);
-            String expend = """
+        String actual = generate(json1, json2);
+        String expend = """
                     {\s
                        - follow: false
                          host: hexlet.io
@@ -37,28 +37,25 @@ public class TestDiffer {
         String json2 = absolute + "/testAlterationJson2.json";
         String actual = generate(json1, json2);
         String expend = """
-                {\s
+                {
                       proxy: 123.234.53.22
                     - timeout: 50
                     + timeout: 30
-                             
                 }""";
+
         assertThat(actual).isEqualToIgnoringWhitespace(expend);
     }
-//
     @Test
     public void testDeleteJson() throws IOException {
         String json1 = absolute + "/testDeleteJson1.json";
         String json2 = absolute + "/testDeleteJson2.json";
-        String actual = generate(json1,json2);
+        String actual = generate(json1, json2);
         String expend = """
                 {\s
-                
                    + follow: false
                     host: hexlet.io
                   - proxy: 123.234.53.22
                     timeout: 50
-                                
                 }""";
         assertThat(actual).isEqualToIgnoringWhitespace(expend);
     }
