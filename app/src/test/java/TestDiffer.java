@@ -1,40 +1,65 @@
-import hexlet.code.Differ;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
-import java.util.Collections;
-import java.util.Map;
+import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static hexlet.code.Differ.generate;
+
 public class TestDiffer {
-    @Test
-    public void testEmptyJson() throws Exception {
-        Map<String, Object> json1 = Collections.emptyMap();
-        Map<String, Object> json2 = Collections.emptyMap();
-
-        String expectedDiff = "{}";
-        String actualDiff = Differ.generate(json1, json2);
-        expectedDiff = expectedDiff.replaceAll("\\s", "");
-        actualDiff = actualDiff.replaceAll("\\s", "");
-
-        assertEquals(expectedDiff, actualDiff);
+    public String absolute;
+    @BeforeEach
+    void beForeEach() {
+        String path = "src/test/resources";
+        File file = new File(path);
+        absolute = file.getAbsolutePath();
     }
     @Test
-    public void testPath() {
-        String path1 = "/Users/obyrif/Desktop/Repository/java-project-71/app/src/main/resources/filepath1.json";
-        String path2 = "/Users/obyrif/Desktop/Repository/java-project-71/app/src/main/resources/filepath2.json";
-
-        File file = new File(path1);
-        File file2 = new File(path2);
-        String absolutePath = file.getAbsolutePath();
-        String absolutePath2 = file2.getAbsolutePath();
-        System.out.println(absolutePath);
-        System.out.println(absolutePath2);
-
-        assertTrue(absolutePath.endsWith("/Users/obyrif/Desktop/Repository/java-project-71/app"
-                + "/src/main/resources/filepath1.json"));
-        assertTrue(absolutePath2.endsWith("/Users/obyrif/Desktop/Repository/java-project-71/"
-                + "app/src/main/resources/filepath2.json"));
+    public void testВasisJson() throws IOException {
+        String json1 = absolute + "/testKeyBasisJson1.json";
+        String json2 = absolute + "/testKeyBasisJson2.json";
+            String actual = generate(json1, json2);
+            String expend = """
+                    {\s
+                       - follow: false
+                         host: hexlet.io
+                       - proxy: 123.234.53.22
+                       - timeout: 50
+                       + timeout: 20
+                       + verbose: true
+                    }""";
+        assertThat(actual).isEqualToNormalizingWhitespace(expend);
+    }
+    @Test
+    public void testAlterationJson() throws IOException {
+        String json1 = absolute + "/testAlterationJson1.json";
+        String json2 = absolute + "/testAlterationJson2.json";
+        String actual = generate(json1, json2);
+        String expend = """
+                {\s
+                      proxy: 123.234.53.22
+                    - timeout: 50
+                    + timeout: 30
+                             
+                }""";
+        assertThat(actual).isEqualToIgnoringWhitespace(expend);
+    }
+//
+    @Test
+    public void testDeleteJson() throws IOException {
+        String json1 = absolute + "/testDeleteJson1.json";
+        String json2 = absolute + "/testDeleteJson2.json";
+        String actual = generate(json1,json2);
+        String expend = """
+                {\s
+                
+                   + follow: false
+                    host: hexlet.io
+                  - proxy: 123.234.53.22
+                    timeout: 50
+                                
+                }""";
+        assertThat(actual).isEqualToIgnoringWhitespace(expend);
     }
 }

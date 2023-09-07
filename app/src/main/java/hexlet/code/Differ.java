@@ -1,10 +1,28 @@
 package hexlet.code;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.beans.PropertyEditorSupport;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
 public class Differ {
-    public static String generate(Map<String, Object> json1, Map<String, Object> json2) throws Exception {
+    public static String generate(String js1, String js2) throws IOException {
+        TypeReference<HashMap<String, Object>> type = new TypeReference<>() { };
+        Path p1 = Path.of(js1).toAbsolutePath();
+        Path p2 = Path.of(js2).toAbsolutePath();
+
+        ObjectMapper mapper = new ObjectMapper();
+        final Map<String, Object> json1 = mapper.readValue(Files.readString(p1), type);
+        final Map<String, Object> json2 = mapper.readValue(Files.readString(p2), type);
+
         StringBuilder diff = new StringBuilder("{\n");
         TreeSet<String> allKeys = new TreeSet<>(json1.keySet());
         allKeys.addAll(json2.keySet());
@@ -37,5 +55,4 @@ public class Differ {
         }
         diff.append("\n");
     }
-
 }
