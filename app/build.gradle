@@ -1,3 +1,14 @@
+buildscript {
+    repositories {
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
+    }
+    dependencies {
+        classpath 'com.adarshr:gradle-test-logger-plugin:3.2.0'
+    }
+}
+
 plugins {
     id 'java'
     id 'application'
@@ -5,6 +16,8 @@ plugins {
     id 'jacoco'
     id 'com.adarshr.test-logger' version '3.2.0'
 }
+apply plugin: 'com.adarshr.test-logger'
+
 checkstyle {
     toolVersion = "8.45"
     configFile = file("$rootDir/config/checkstyle/checkstyle.xml")
@@ -40,11 +53,23 @@ test {
     finalizedBy jacocoTestReport
 }
 testlogger {
-    theme 'mocha'
-    slowThreshold 5000
+    theme 'standard'
+    showExceptions true
+    showStackTraces true
+    showFullStackTraces false
+    showCauses true
+    slowThreshold 2000
+    showSummary true
+    showSimpleNames false
     showPassed true
     showSkipped true
     showFailed true
+    showOnlySlow false
+    showStandardStreams false
+    showPassedStandardStreams true
+    showSkippedStandardStreams true
+    showFailedStandardStreams true
+    logLevel 'lifecycle'
 }
 
 jacocoTestReport {
