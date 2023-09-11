@@ -1,54 +1,37 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
+import java.nio.file.Paths;
 import java.util.Map;
-import java.util.TreeSet;
 
 public class Differ {
-    public static String generate(String js1, String js2) throws IOException {
-        TypeReference<HashMap<String, Object>> type = new TypeReference<>() { };
-        Path p1 = Path.of(js1).toAbsolutePath();
-        Path p2 = Path.of(js2).toAbsolutePath();
-
-        ObjectMapper mapper = new ObjectMapper();
-        final Map<String, Object> json1 = mapper.readValue(Files.readString(p1), type);
-        final Map<String, Object> json2 = mapper.readValue(Files.readString(p2), type);
-
-        StringBuilder diff = new StringBuilder("{\n");
-        TreeSet<String> allKeys = new TreeSet<>(json1.keySet());
-        allKeys.addAll(json2.keySet());
-
-        for (String key : allKeys) {
-            Object value1 = json1.get(key);
-            Object value2 = json2.get(key);
-
-            if (json1.containsKey(key) && !json2.containsKey(key)) {
-                appendDiffLine(diff, "-", key, value1);
-            } else if (!json1.containsKey(key) && json2.containsKey(key)) {
-                appendDiffLine(diff, "+", key, value2);
-            } else if (!value1.equals(value2)) {
-                appendDiffLine(diff, "-", key, value1);
-                appendDiffLine(diff, "+", key, value2);
-            } else if (value1.equals(value2)) {
-                appendDiffLine(diff, " ", key, value1);
-            }
-        }
-        diff.append("}");
-        return diff.toString();
+    public static String generate(String js1, String js2) throws Exception {
+        String p1 = read(js1);
+        String p2 = read(js2);
+        String p1Format = format(p1);
+        String p2Format = format(p2);
+        Map<String, Object> json1 = Parser.parserFiletToMap(p1, p1Format);
+        Map<String, Object> json2 = Parser.parserFiletToMap(p2, p2Format);
+        return DifferMapList.diffList(json1, json2);
     }
 
-    private static void appendDiffLine(StringBuilder diff, String symbol, String key, Object value) {
-        diff.append("  ").append(symbol).append(" ").append(key).append(": ");
-        if (value instanceof String) {
-            diff.append(value);
-        } else {
-            diff.append(value);
+    public static String read(String pathFile) throws Exception {
+        Path path = Paths.get(pathFile).toAbsolutePath().normalize();
+        if (!Files.exists(path)) {
+            throw new Exception("File '" + path + "' does not exist");
         }
-        diff.append("\n");
+        return Files.readString(path);
+    }
+
+    public static String format(String pathFile) {
+        String extension = pathFile.toLowerCase();
+        if (extension.contains("json")) {
+            return "json";
+        } else if (extension.contains("yml") || extension.contains("yaml")) {
+            return "yml";
+        } else {
+            throw new RuntimeException("error");
+        }
     }
 }
