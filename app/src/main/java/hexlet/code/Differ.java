@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Differ {
-    public static String generate(String js1, String js2) throws Exception {
+    public static String generate(String js1, String js2, String format) throws Exception {
         String p1 = read(js1);
         String p2 = read(js2);
 
@@ -17,6 +17,10 @@ public class Differ {
         var json2 = Parser.parserFiletToMap(p2, p2Format);
 
         return DifferMapList.diffList(json1,json2);
+    }
+
+    public static String generate(String js1,String js2) throws Exception{
+        return generate(js1,js2, "stylish");
     }
 
     public static String read(String pathFile) throws IOException {
