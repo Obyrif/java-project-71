@@ -28,14 +28,20 @@ test {
     useJUnitPlatform()
 }
 testlogger {
-    showStandardStreams true
+    theme 'mocha'
+    slowThreshold 5000
+    showPassed true
+    showSkipped true
+    showFailed true
 }
 
 jacocoTestReport {
+    dependsOn test
     reports {
         xml.required = true
     }
 }
+
 compileJava {
     options.release.set(20)
 }

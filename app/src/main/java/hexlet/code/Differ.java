@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
 
 public class Differ {
     public static String generate(String js1, String js2, String format) throws Exception {
@@ -13,14 +14,14 @@ public class Differ {
         String p1Format = format(js1);
         String p2Format = format(js2);
 
-        var json1 = Parser.parserFiletToMap(p1, p1Format);
-        var json2 = Parser.parserFiletToMap(p2, p2Format);
+        Map<String, Object> json1 = Parser.parserFiletToMap(p1, p1Format);
+        Map<String, Object> json2 = Parser.parserFiletToMap(p2, p2Format);
 
-        return DifferMapList.diffList(json1,json2);
+        return DifferMapList.diffList(json1, json2);
     }
 
-    public static String generate(String js1,String js2) throws Exception{
-        return generate(js1,js2, "stylish");
+    public static String generate(String js1, String js2) throws Exception {
+        return generate(js1, js2, "stylish");
     }
 
     public static String read(String pathFile) throws IOException {
