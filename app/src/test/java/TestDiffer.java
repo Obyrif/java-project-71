@@ -16,7 +16,7 @@
 //        absolute = file.getAbsolutePath();
 //    }
 //    @Test
-//    public void testBasisJson() throws IOException {
+//    public void testBasisJson() throws Exception {
 //        String json1 = absolute + "/testKeyBasisJson1.json";
 //        String json2 = absolute + "/testKeyBasisJson2.json";
 //        String actual = generate(json1, json2);
@@ -32,7 +32,7 @@
 //        assertThat(actual).isEqualToNormalizingWhitespace(expend);
 //    }
 //    @Test
-//    public void testAlterationJson() throws IOException {
+//    public void testAlterationJson() throws Exception {
 //        String json1 = absolute + "/testAlterationJson1.json";
 //        String json2 = absolute + "/testAlterationJson2.json";
 //        String actual = generate(json1, json2);
@@ -46,7 +46,7 @@
 //        assertThat(actual).isEqualToIgnoringWhitespace(expend);
 //    }
 //    @Test
-//    public void testDeleteJson() throws IOException {
+//    public void testDeleteJson() throws Exception {
 //        String json1 = absolute + "/testDeleteJson1.json";
 //        String json2 = absolute + "/testDeleteJson2.json";
 //        String actual = generate(json1, json2);
