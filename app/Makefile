@@ -14,7 +14,7 @@ lint:
 run-dist:
 	./build/install/app/bin/app
 
-test-report:
+report:
 	./gradlew test
 	./gradlew jacocoTestReport
 
