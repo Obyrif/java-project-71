@@ -1,14 +1,6 @@
-run-dist:
-	./build/install/app/bin/app
-
-clean:
-	./gradlew clean
-
 build:
-	./gradlew clean build
-
-install:
-	./gradlew clean install
+	./gradlew clean
+	./gradlew build
 
 run:
 	./gradlew run
@@ -16,15 +8,16 @@ run:
 test:
 	./gradlew test
 
-report:
-	./gradlew jacocoTestReport
-
 lint:
 	./gradlew checkstyleMain
 
-check-deps:
-	./gradlew dependencyUpdates -Drevision=release
+run-dist:
+	./build/install/app/bin/app
 
-build-run: build run
+test-report:
+	./gradlew test
+	./gradlew jacocoTestReport
 
 .PHONY: build
+.PHONY: test
+.PHONY: jacocoTestReport
