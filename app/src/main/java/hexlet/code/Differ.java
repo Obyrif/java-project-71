@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 
+
 public class Differ {
     public static String generate(String js1, String js2, String format) throws Exception {
         String p1 = read(js1);
@@ -17,7 +18,8 @@ public class Differ {
         Map<String, Object> json1 = Parser.parserFiletToMap(p1, p1Format);
         Map<String, Object> json2 = Parser.parserFiletToMap(p2, p2Format);
 
-        return DifferMapList.diffList(json1, json2);
+        String result = DifferMapList.diffList(json1, json2);
+        return Formatter.formatComparisonResult(result, format);
     }
 
     public static String generate(String js1, String js2) throws Exception {
