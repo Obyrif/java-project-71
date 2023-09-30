@@ -1,4 +1,4 @@
-package hexlet.code;
+package hexlet.code.Formatter;
 
 public class Stylish {
 
@@ -8,9 +8,9 @@ public class Stylish {
         String[] lines = result.split("\n");
 
         for (String line : lines) {
-            formattedResult.append("  ");  // Отступ
-            formattedResult.append(line);  // Добавление строки
-            formattedResult.append("\n");  // Перенос строки
+            formattedResult.append("  ");
+            formattedResult.append(line);
+            formattedResult.append("\n");
         }
 
         formattedResult.append("");
