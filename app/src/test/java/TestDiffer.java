@@ -64,7 +64,7 @@ public class TestDiffer {
     public void testNesting() throws Exception {
         String json1 = absolute + "/testNestingfile1.json";
         String json2 = absolute + "/testNestingfile2.json";
-        String actual = generate(json1, json2);
+        String actual = generate(json1, json2, "stylish");
         String expend = """
                 {
                       chars1: [a, b, c]
@@ -107,4 +107,34 @@ public class TestDiffer {
                 """;
         assertThat(actual).isEqualToIgnoringWhitespace(expend);
     }
+//    @Test
+//    public void testNesting() {
+//        String json1 = absolute + "/1.json";
+//        String json2 = absolute + "/2.json";
+//        String actual = generate(json1, json2, "plain");
+//        String expend = """
+//                Property '    chars1' was updated. From '[a, b, c]'
+//                Property '  - chars2' was updated. From '[d, e, f]'
+//                Property '  + chars2' was updated. From 'false'
+//                Property '  - checked' was updated. From 'false'
+//                Property '  + checked' was updated. From 'true'
+//                Property '  + default' was updated. From '[value1, value2]'
+//                Property '  - id' was updated. From '45'
+//                Property '  - key1' was updated. From 'value1'
+//                Property '  + key2' was updated. From 'value2'
+//                Property '    numbers1' was updated. From '[1, 2, 3, 4]'
+//                Property '  - numbers2' was updated. From '[2, 3, 4, 5]'
+//                Property '  + numbers2' was updated. From '[22, 33, 44, 55]'
+//                Property '  - numbers3' was updated. From '[3, 4, 5]'
+//                Property '  + numbers4' was updated. From '[4, 5, 6]'
+//                Property '  + obj1' was updated. From '{nestedKey=value, isNested=true}'
+//                Property '  - setting1' was updated. From 'Some value'
+//                Property '  + setting1' was updated. From 'Another value'
+//                Property '  - setting2' was updated. From '200'
+//                Property '  + setting2' was updated. From '300'
+//                Property '  - setting3' was updated. From 'true'
+//                Property '  + setting3' was updated. From 'none'
+//                """;
+//        assertThat(actual).isEqualToIgnoringWhitespace(expend);
+//    }
 }
