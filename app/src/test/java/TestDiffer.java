@@ -47,6 +47,11 @@ public class TestDiffer {
         assertThat(result).isEqualToIgnoringWhitespace(resultStylish);
     }
     @Test
+    public void testRightComparisonYaml() throws Exception {
+        String result = Differ.generate(FILE1_YAML, FILE2_YAML);
+        assertThat(result).isEqualToIgnoringWhitespace(resultStylish);
+    }
+    @Test
     public void testRightComparisonStylishJSON() throws Exception {
         String result = Differ.generate(FILE1_JSON, FILE2_JSON, "stylish");
         assertThat(result).isEqualToIgnoringWhitespace(resultStylish);
