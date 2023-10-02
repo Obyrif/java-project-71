@@ -92,4 +92,19 @@ public class TestDiffer {
                 """;
         assertThat(actual).isEqualToIgnoringWhitespace(expend);
     }
+    @Test
+    public void testOne() throws Exception {
+        String json1 = absolute + "/file1Null.json";
+        String json2 = absolute + "/file2Null.json";
+        String actual = generate(json1, json2);
+        String expend = """
+                 {
+                    + age: 4
+                    + city: San Francisco
+                    - name: John
+                    + name: Alice
+                  }
+                """;
+        assertThat(actual).isEqualToIgnoringWhitespace(expend);
+    }
 }

@@ -2,6 +2,10 @@ package hexlet.code.Formatter;
 
 public class Plain {
     public static String plainResult(String result) {
+        if (result == null) {
+            return null;
+        }
+
         StringBuilder formattedResult = new StringBuilder();
 
         String[] lines = result.split("\n");
