@@ -16,17 +16,17 @@ public class TestDiffer {
     private static String resultJson;
 
     public static final String FILE1_JSON =
-            "src/test/resources/testfile1.json";
+            "src/test/resources/fixtures/testfile1.json";
     public static final String FILE2_JSON =
-            "src/test/resources/testfile2.json";
+            "src/test/resources/fixtures/testfile2.json";
 
     public static final String FILE1_YAML =
-            "src/test/resources/test1Y.yml";
+            "src/test/resources/fixtures/test1Y.yml";
     public static final String FILE2_YAML =
-            "src/test/resources/test2Y.yml";
+            "src/test/resources/fixtures/test2Y.yml";
 
     private static Path getFixturePath(String fileName) {
-        return Paths.get("src", "test", "resources", fileName)
+        return Paths.get("src", "test", "resources", "fixtures", fileName)
                 .toAbsolutePath().normalize();
     }
 
