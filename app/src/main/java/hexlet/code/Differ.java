@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
 
 
@@ -18,7 +19,7 @@ public class Differ {
         Map<String, Object> json1 = Parser.parserFiletToMap(p1, p1Format);
         Map<String, Object> json2 = Parser.parserFiletToMap(p2, p2Format);
 
-        String result = DifferMapList.diffList(json1, json2);
+        List<Map<String, Object>> result = DifferMapList.diffList(json1, json2);
         return Format.formatComparisonResult(result, format);
     }
 

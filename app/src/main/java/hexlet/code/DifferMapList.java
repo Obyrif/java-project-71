@@ -1,35 +1,48 @@
 package hexlet.code;
 
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 
 public class DifferMapList {
-    public static String diffList(Map<String, Object> json1, Map<String, Object> json2) {
-        StringBuilder diff = new StringBuilder("{\n");
+    public static List<Map<String, Object>> diffList(Map<String, Object> json1, Map<String, Object> json2) {
+        List<Map<String, Object>> differences = new ArrayList<>();
+
         TreeSet<String> allKeys = new TreeSet<>(json1.keySet());
         allKeys.addAll(json2.keySet());
+
         for (String key : allKeys) {
             Object value1 = json1.get(key);
             Object value2 = json2.get(key);
 
+            Map<String, Object> difference = new LinkedHashMap<>();
+            difference.put("key", key);
+
             if (value1 == null && value2 == null) {
-                return null;
+                difference.put("status", "unchanged");
             } else if (value1 == null) {
-                appendDiffLine(diff, "+", key, value2);
+                difference.put("status", "added");
+                difference.put("newValue", value2);
             } else if (value2 == null) {
-                appendDiffLine(diff, "-", key, value1);
+                difference.put("status", "removed");
+                difference.put("oldValue", value1);
+            } else if (!value1.getClass().equals(value2.getClass())) {
+                difference.put("status", "changed");
+                difference.put("oldValue", value1);
+                difference.put("newValue", value2);
             } else if (!value1.equals(value2)) {
-                appendDiffLine(diff, "-", key, value1);
-                appendDiffLine(diff, "+", key, value2);
+                difference.put("status", "changed");
+                difference.put("oldValue", value1);
+                difference.put("newValue", value2);
             } else {
-                appendDiffLine(diff, " ", key, value1);
+                difference.put("status", "unchanged");
             }
+            differences.add(difference);
         }
-        diff.append("}");
-        return diff.toString();
-    }
-    private static void appendDiffLine(StringBuilder diff, String symbol, String key, Object value) {
-        diff.append("  ").append(symbol).append(" ").append(key).append(": ").append(value).append("\n");
+        return differences;
     }
 }
+

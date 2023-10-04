@@ -1,20 +1,30 @@
 package hexlet.code.Formatter;
 
+import java.util.List;
+import java.util.Map;
+
 public class Stylish {
+    public static String stylishResult(List<Map<String, Object>> resultMap) {
+        StringBuilder result = new StringBuilder("{\n");
 
-    public static String stylishResult(String result) {
-        StringBuilder formattedResult = new StringBuilder();
-
-        String[] lines = result.split("\n");
-
-        for (String line : lines) {
-            formattedResult.append("  ");
-            formattedResult.append(line);
-            formattedResult.append("\n");
+        for (Map<String, Object> records : resultMap) {
+            switch (records.get("status") != null ? records.get("status").toString() : "") {
+                case "removed" -> result.append("  - ").append(records.get("key")).append(": ")
+                        .append(records.get("oldValue")).append("\n");
+                case "added" -> result.append("  + ").append(records.get("key")).append(": ")
+                        .append(records.get("newValue")).append("\n");
+                case "unchanged" -> result.append("    ").append(records.get("key")).append(": ")
+                        .append(records.get("oldValue")).append("\n");
+                case "changed" -> {
+                    result.append("  - ").append(records.get("key")).append(": ")
+                            .append(records.get("oldValue")).append("\n");
+                    result.append("  + ").append(records.get("key")).append(": ")
+                            .append(records.get("newValue")).append("\n");
+                }
+                default -> throw new Error("Unknown status!" + records.get("status"));
+            }
         }
-
-        formattedResult.append("");
-
-        return formattedResult.toString();
+        result.append("}");
+        return result.toString();
     }
 }

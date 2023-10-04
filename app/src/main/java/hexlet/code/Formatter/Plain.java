@@ -1,48 +1,46 @@
 package hexlet.code.Formatter;
 
-public class Plain {
-    public static String plainResult(String result) {
-        if (result == null) {
-            return null;
-        }
+import java.util.List;
+import java.util.Map;
 
+public class Plain {
+    public static String plainResult(List<Map<String, Object>> resultMap) {
         StringBuilder formattedResult = new StringBuilder();
 
-        String[] lines = result.split("\n");
+        for (Map<String, Object> records : resultMap) {
+            String property = records.containsKey("key") ? records.get("key").toString() : null;
+            String oldValue = checkValue(records.get("oldValue"));
+            String newValue = checkValue(records.get("newValue"));
+            String status = records.containsKey("status") ? records.get("status").toString() : null;
 
-        for (String line : lines) {
-            String[] parts = line.split(": ", 2);
-
-            if (parts.length == 2) {
-                String property = parts[0];
-                String value = parts[1];
-
-                if ("null".equals(value)) {
-                    formattedResult.append("Property '").append(property).append("' was removed");
-                } else if ("null".equals(property)) {
-                    if ("[complex value]".equals(value)) {
-                        formattedResult.append("Property '").append(parts[1])
-                                .append("' was added with value: ").append(value);
-                    } else {
-                        formattedResult.append("Property '").append(parts[1]).append("' was added with value: '")
-                                .append(value).append("'");
-                    }
-                } else {
-                    if ("[complex value]".equals(value)) {
-                        formattedResult.append("Property '").append(property)
-                                .append("' was updated. From [complex value]");
-                    } else {
-                        formattedResult.append("Property '").append(property)
-                                .append("' was updated. From '").append(value).append("'");
-                    }
-                }
-                formattedResult.append("\n");
+            if ("removed".equals(status)) {
+                formattedResult.append("Property '").append(property).append("' was removed");
+            } else if ("added".equals(status)) {
+                formattedResult.append("Property '").append(property).append("' was added with value: ")
+                        .append(newValue);
+            } else if ("changed".equals(status)) {
+                formattedResult.append("Property '").append(property).append("' was updated. From ")
+                        .append(oldValue).append(" to ").append(newValue);
             }
+
+            formattedResult.append("\n");
         }
 
         return formattedResult.toString().trim();
     }
+
+    public static String checkValue(Object value) {
+        if (value instanceof Map || value instanceof List<?>) {
+            return "[complex value]";
+        } else if (value instanceof String) {
+            return "'" + value + "'";
+        } else if (value == null) {
+            return "null";
+        }
+        return value.toString();
+    }
 }
+
 
 
 

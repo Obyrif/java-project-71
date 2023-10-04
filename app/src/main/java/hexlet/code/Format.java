@@ -4,8 +4,11 @@ import hexlet.code.Formatter.Json;
 import hexlet.code.Formatter.Plain;
 import hexlet.code.Formatter.Stylish;
 
+import java.util.List;
+import java.util.Map;
+
 public class Format {
-    public static String formatComparisonResult(String comparisonResult, String format)
+    public static String formatComparisonResult(List<Map<String, Object>> comparisonResult, String format)
             throws Exception {
         return switch (format) {
             case "stylish" -> Stylish.stylishResult(comparisonResult);
