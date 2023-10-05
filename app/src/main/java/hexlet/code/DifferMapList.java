@@ -22,13 +22,18 @@ public class DifferMapList {
             difference.put("key", key);
 
             if (value1 == null && value2 == null) {
+                // Если оба значения равны null, считаем их неизмененными
                 difference.put("status", "unchanged");
+                difference.put("oldValue", null);
+                difference.put("newValue", null);
             } else if (value1 == null) {
                 difference.put("status", "added");
                 difference.put("newValue", value2);
+                difference.put("oldValue", null); // Значение в первом файле равно null
             } else if (value2 == null) {
                 difference.put("status", "removed");
                 difference.put("oldValue", value1);
+                difference.put("newValue", null); // Значение во втором файле равно null
             } else if (!value1.getClass().equals(value2.getClass())) {
                 difference.put("status", "changed");
                 difference.put("oldValue", value1);
@@ -39,10 +44,11 @@ public class DifferMapList {
                 difference.put("newValue", value2);
             } else {
                 difference.put("status", "unchanged");
+                difference.put("oldValue", value1);
+                difference.put("newValue", value2);
             }
             differences.add(difference);
         }
         return differences;
     }
 }
-
