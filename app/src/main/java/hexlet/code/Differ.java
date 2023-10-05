@@ -19,7 +19,7 @@ public class Differ {
         Map<String, Object> json1 = Parser.parserFiletToMap(p1, p1Format);
         Map<String, Object> json2 = Parser.parserFiletToMap(p2, p2Format);
 
-        List<Map<String, Object>> result = DifferMapList.diffList(json1, json2);
+        List<KeyDifference> result = DifferMapList.diffList(json1, json2);
         return Format.formatComparisonResult(result, format);
     }
 

@@ -1,17 +1,19 @@
 package hexlet.code.Formatter;
 
+import hexlet.code.KeyDifference;
+
 import java.util.List;
 import java.util.Map;
 
 public class Plain {
-    public static String plainResult(List<Map<String, Object>> resultMap) {
+    public static String plainResult(List<KeyDifference> keyDifferences) {
         StringBuilder formattedResult = new StringBuilder();
 
-        for (Map<String, Object> records : resultMap) {
-            String property = records.containsKey("key") ? records.get("key").toString() : null;
-            String oldValue = checkValue(records.get("oldValue"));
-            String newValue = checkValue(records.get("newValue"));
-            String status = records.containsKey("status") ? records.get("status").toString() : null;
+        for (KeyDifference difference : keyDifferences) {
+            String property = difference.getKey();
+            String oldValue = checkValue(difference.getOldValue());
+            String newValue = checkValue(difference.getNewValue());
+            String status = difference.getStatus();
 
             if ("removed".equals(status)) {
                 formattedResult.append("Property '").append(property).append("' was removed");
@@ -40,7 +42,6 @@ public class Plain {
         return value.toString();
     }
 }
-
 
 
 
