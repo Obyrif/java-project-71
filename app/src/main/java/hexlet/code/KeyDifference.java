@@ -1,6 +1,6 @@
 package hexlet.code;
 
-public class KeyDifference {
+public final class KeyDifference {
     private final String key;
     private String status;
     private Object oldValue;
