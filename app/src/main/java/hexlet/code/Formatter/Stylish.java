@@ -2,10 +2,12 @@ package hexlet.code.Formatter;
 import hexlet.code.KeyDifference;
 
 import java.util.List;
+import java.util.StringJoiner;
 
 public class Stylish {
     public static String stylishResult(List<KeyDifference> differences) {
-        StringBuilder result = new StringBuilder("{\n");
+        StringJoiner joiner = new StringJoiner("\n", "{\n", "\n}");
+
         for (KeyDifference difference : differences) {
             String status = difference.getStatus();
             Object oldValue = difference.getOldValue();
@@ -13,24 +15,33 @@ public class Stylish {
 
             switch (status) {
                 case "added":
-                    result.append("  + ").append(difference.getKey()).append(": ").append(newValue).append("\n");
+                    joiner.add("  + " + difference.getKey() + ": " + stringifyValue(newValue));
                     break;
                 case "removed":
-                    result.append("  - ").append(difference.getKey()).append(": ").append(oldValue).append("\n");
+                    joiner.add("  - " + difference.getKey() + ": " + stringifyValue(oldValue));
                     break;
                 case "changed":
-                    result.append("  - ").append(difference.getKey()).append(": ").append(oldValue).append("\n")
-                            .append("  + ").append(difference.getKey()).append(": ").append(newValue).append("\n");
+                    joiner.add("  - " + difference.getKey() + ": " + stringifyValue(oldValue));
+                    joiner.add("  + " + difference.getKey() + ": " + stringifyValue(newValue));
                     break;
                 case "unchanged":
-                    result.append("    ").append(difference.getKey()).append(": ").append(newValue).append("\n");
+                    joiner.add("    " + difference.getKey() + ": " + stringifyValue(newValue));
                     break;
                 default:
                     throw new RuntimeException("Unknown status of element: '" + status + "'");
             }
         }
-        result.append("}");
-        return result.toString();
+        return joiner.toString();
+    }
+
+    private static String stringifyValue(Object value) {
+        if (value instanceof String) {
+            return value.toString();
+        } else if (value == null) {
+            return "null";
+        } else {
+            return value.toString();
+        }
     }
 }
 

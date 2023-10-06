@@ -1,16 +1,13 @@
 package hexlet.code;
 
 public class KeyDifference {
-    private String key;
+    private final String key;
     private String status;
     private Object oldValue;
     private Object newValue;
 
     public KeyDifference(String key) {
         this.key = key;
-        this.status = status;
-        this.oldValue = oldValue;
-        this.newValue = newValue;
     }
 
     public String getKey() {
@@ -27,10 +24,6 @@ public class KeyDifference {
 
     public Object getNewValue() {
         return newValue;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
     }
 
     public void setStatus(String status) {
