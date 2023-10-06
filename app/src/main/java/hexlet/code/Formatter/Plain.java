@@ -16,16 +16,14 @@ public class Plain {
             String status = difference.getStatus();
 
             if ("removed".equals(status)) {
-                formattedResult.append("Property '").append(property).append("' was removed");
+                formattedResult.append("Property '").append(property).append("' was removed\n");
             } else if ("added".equals(status)) {
                 formattedResult.append("Property '").append(property).append("' was added with value: ")
-                        .append(newValue);
+                        .append(newValue).append("\n");
             } else if ("changed".equals(status)) {
                 formattedResult.append("Property '").append(property).append("' was updated. From ")
-                        .append(oldValue).append(" to ").append(newValue);
+                        .append(oldValue).append(" to ").append(newValue).append("\n");
             }
-
-            formattedResult.append("\n");
         }
 
         return formattedResult.toString().trim();
@@ -42,11 +40,3 @@ public class Plain {
         return value.toString();
     }
 }
-
-
-
-
-
-
-
-
