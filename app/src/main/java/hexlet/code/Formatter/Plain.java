@@ -11,18 +11,18 @@ public class Plain {
 
         for (KeyDifference difference : keyDifferences) {
             String property = difference.getKey();
-            String oldValue = checkValue(difference.getOldValue());
-            String newValue = checkValue(difference.getNewValue());
+            String value1 = checkValue(difference.getValue1());
+            String value2 = checkValue(difference.getValue2());
             String status = difference.getStatus();
 
             if ("removed".equals(status)) {
                 formattedResult.append("Property '").append(property).append("' was removed\n");
             } else if ("added".equals(status)) {
                 formattedResult.append("Property '").append(property).append("' was added with value: ")
-                        .append(newValue).append("\n");
+                        .append(value2).append("\n");
             } else if ("changed".equals(status)) {
                 formattedResult.append("Property '").append(property).append("' was updated. From ")
-                        .append(oldValue).append(" to ").append(newValue).append("\n");
+                        .append(value1).append(" to ").append(value2).append("\n");
             }
         }
 

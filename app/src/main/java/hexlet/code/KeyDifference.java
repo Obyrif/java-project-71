@@ -3,8 +3,8 @@ package hexlet.code;
 public final class KeyDifference {
     private final String key;
     private String status;
-    private Object oldValue;
-    private Object newValue;
+    private Object value1;
+    private Object value2;
 
     public KeyDifference(String key) {
         this.key = key;
@@ -18,23 +18,23 @@ public final class KeyDifference {
         return status;
     }
 
-    public Object getOldValue() {
-        return oldValue;
+    public Object getValue1() {
+        return value1;
     }
 
-    public Object getNewValue() {
-        return newValue;
+    public Object getValue2() {
+        return value2;
+    }
+
+    public void setValue1(Object value1) {
+        this.value1 = value1;
+    }
+
+    public void setValue2(Object value2) {
+        this.value2 = value2;
     }
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public void setOldValue(Object oldValue) {
-        this.oldValue = oldValue;
-    }
-
-    public void setNewValue(Object newValue) {
-        this.newValue = newValue;
     }
 }

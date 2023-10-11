@@ -1,3 +1,5 @@
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import hexlet.code.Differ;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -8,10 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-
 public class TestDiffer {
     private static String resultStylish;
-
     private static String resultPlain;
     private static String resultJson;
 
@@ -19,7 +19,6 @@ public class TestDiffer {
             "src/test/resources/fixtures/testfile1.json";
     public static final String FILE2_JSON =
             "src/test/resources/fixtures/testfile2.json";
-
     public static final String FILE1_YAML =
             "src/test/resources/fixtures/test1Y.yml";
     public static final String FILE2_YAML =
@@ -35,55 +34,45 @@ public class TestDiffer {
         return Files.readString(filePath).trim();
 
     }
+
     @BeforeAll
     public static void beforeAll() throws Exception {
         resultStylish = readFixture("resultSlylish.txt");
         resultPlain = readFixture("resultPlain.txt");
         resultJson = readFixture("resultJson.json");
     }
+
     @Test
-    public void testRightComparisonJSON() throws Exception {
+    public void testRightComparison() throws Exception {
         String result = Differ.generate(FILE1_JSON, FILE2_JSON);
         assertThat(result).isEqualToIgnoringWhitespace(resultStylish);
-    }
-    @Test
-    public void testRightComparisonYaml() throws Exception {
-        String result = Differ.generate(FILE1_YAML, FILE2_YAML);
-        assertThat(result).isEqualToIgnoringWhitespace(resultStylish);
-    }
-    @Test
-    public void testRightComparisonStylishJSON() throws Exception {
-        String result = Differ.generate(FILE1_JSON, FILE2_JSON, "stylish");
-        assertThat(result).isEqualToIgnoringWhitespace(resultStylish);
-    }
-    @Test
-    public void testRightComparisonStylishYAML() throws Exception {
-        String result = Differ.generate(FILE1_YAML, FILE2_YAML, "stylish");
-        assertThat(result).isEqualToIgnoringWhitespace(resultStylish);
-    }
-
-
-    @Test
-    public void testRightComparisonPlainJSON() throws Exception {
-        String result = Differ.generate(FILE1_JSON, FILE2_JSON, "plain");
-        assertThat(result).isEqualToIgnoringWhitespace(resultPlain);
-    }
-
-    @Test
-    public void testRightComparisonPlainYAML() throws Exception {
-        String result = Differ.generate(FILE1_YAML, FILE2_YAML, "plain");
-        assertThat(result).isEqualToIgnoringWhitespace(resultPlain);
+        String result2 = Differ.generate(FILE1_YAML, FILE2_YAML);
+        assertThat(result2).isEqualToIgnoringWhitespace(resultStylish);
+        String result3 = Differ.generate(FILE1_JSON, FILE2_JSON, "stylish");
+        assertThat(result3).isEqualToIgnoringWhitespace(resultStylish);
+        String result4 = Differ.generate(FILE1_YAML, FILE2_YAML, "stylish");
+        assertThat(result4).isEqualToIgnoringWhitespace(resultStylish);
+        String result5 = Differ.generate(FILE1_JSON, FILE2_JSON, "plain");
+        assertThat(result5).isEqualToIgnoringWhitespace(resultPlain);
+        String result6 = Differ.generate(FILE1_YAML, FILE2_YAML, "plain");
+        assertThat(result6).isEqualToIgnoringWhitespace(resultPlain);
     }
 
     @Test
     public void testRightComparisonFormatJSONJ() throws Exception {
         String result = Differ.generate(FILE1_JSON, FILE2_JSON, "json");
-        assertThat(result).isEqualTo(resultJson);
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode expectedJson = objectMapper.readTree(resultJson);
+        JsonNode actualJson = objectMapper.readTree(result);
+        assertThat(actualJson).isEqualTo(expectedJson);
     }
 
     @Test
     public void testRightComparisonFormatJSONY() throws Exception {
         String result = Differ.generate(FILE1_YAML, FILE2_YAML, "json");
-        assertThat(result).isEqualTo(resultJson);
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode expendJson = objectMapper.readTree(resultJson);
+        JsonNode actualJson = objectMapper.readTree(result);
+        assertThat(actualJson).isEqualTo(expendJson);
     }
 }

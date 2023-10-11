@@ -10,8 +10,8 @@ public class Stylish {
 
         for (KeyDifference difference : differences) {
             String status = difference.getStatus();
-            Object oldValue = difference.getOldValue();
-            Object newValue = difference.getNewValue();
+            Object oldValue = difference.getValue1();
+            Object newValue = difference.getValue2();
 
             switch (status) {
                 case "added":
@@ -44,4 +44,3 @@ public class Stylish {
         }
     }
 }
-

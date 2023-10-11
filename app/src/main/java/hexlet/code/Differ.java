@@ -13,8 +13,8 @@ public class Differ {
         String p1 = read(js1);
         String p2 = read(js2);
 
-        String p1Format = format(js1);
-        String p2Format = format(js2);
+        String p1Format = getFormat(js1);
+        String p2Format = getFormat(js2);
 
         Map<String, Object> json1 = Parser.parserFiletToMap(p1, p1Format);
         Map<String, Object> json2 = Parser.parserFiletToMap(p2, p2Format);
@@ -32,7 +32,7 @@ public class Differ {
         return Files.readString(path);
     }
 
-    public static String format(String pathFile) {
+    public static String getFormat(String pathFile) {
         String extension = pathFile.toLowerCase();
         if (extension.contains("json")) {
             return "json";
