@@ -27,6 +27,7 @@ class App implements Callable<Integer> {
             var diff = Differ.generate(filepath1, filepath2, format);
             System.out.println(diff);
         } catch (Exception e) {
+            System.out.println("Error");
             return 1;
         }
         return 0;

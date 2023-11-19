@@ -30,12 +30,12 @@ public class Plain {
     }
 
     public static String checkValue(Object value) {
-        if (value instanceof Map || value instanceof List<?>) {
+        if (value == null) {
+            return "null";
+        } else if (value instanceof Map || value instanceof List<?>) {
             return "[complex value]";
         } else if (value instanceof String) {
             return "'" + value + "'";
-        } else if (value == null) {
-            return "null";
         }
         return value.toString();
     }

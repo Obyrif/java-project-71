@@ -15,14 +15,10 @@ public class TestDiffer {
     private static String resultPlain;
     private static String resultJson;
 
-    public static final String FILE1_JSON =
-            "src/test/resources/fixtures/testfile1.json";
-    public static final String FILE2_JSON =
-            "src/test/resources/fixtures/testfile2.json";
-    public static final String FILE1_YAML =
-            "src/test/resources/fixtures/test1Y.yml";
-    public static final String FILE2_YAML =
-            "src/test/resources/fixtures/test2Y.yml";
+    public static final Path FILE1_JSON = getFixturePath("testfile1.json");
+    public static final Path FILE2_JSON = getFixturePath("testfile2.json");
+    public static final Path FILE1_YAML = getFixturePath("test1Y.yml");
+    public static final Path FILE2_YAML = getFixturePath("test2Y.yml");
 
     private static Path getFixturePath(String fileName) {
         return Paths.get("src", "test", "resources", "fixtures", fileName)
@@ -44,35 +40,29 @@ public class TestDiffer {
 
     @Test
     public void testRightComparison() throws Exception {
-        String result = Differ.generate(FILE1_JSON, FILE2_JSON);
+        String result = Differ.generate(String.valueOf(FILE1_JSON), String.valueOf(FILE2_JSON));
+        String result2 = Differ.generate(String.valueOf(FILE1_YAML), String.valueOf(FILE2_YAML));
+        String result3 = Differ.generate(String.valueOf(FILE1_JSON), String.valueOf(FILE2_JSON), "stylish");
+        String result4 = Differ.generate(String.valueOf(FILE1_YAML), String.valueOf(FILE2_YAML), "stylish");
+        String result5 = Differ.generate(String.valueOf(FILE1_JSON), String.valueOf(FILE2_JSON), "plain");
+        String result6 = Differ.generate(String.valueOf(FILE1_YAML), String.valueOf(FILE2_YAML), "plain");
         assertThat(result).isEqualToIgnoringWhitespace(resultStylish);
-        String result2 = Differ.generate(FILE1_YAML, FILE2_YAML);
         assertThat(result2).isEqualToIgnoringWhitespace(resultStylish);
-        String result3 = Differ.generate(FILE1_JSON, FILE2_JSON, "stylish");
         assertThat(result3).isEqualToIgnoringWhitespace(resultStylish);
-        String result4 = Differ.generate(FILE1_YAML, FILE2_YAML, "stylish");
         assertThat(result4).isEqualToIgnoringWhitespace(resultStylish);
-        String result5 = Differ.generate(FILE1_JSON, FILE2_JSON, "plain");
         assertThat(result5).isEqualToIgnoringWhitespace(resultPlain);
-        String result6 = Differ.generate(FILE1_YAML, FILE2_YAML, "plain");
         assertThat(result6).isEqualToIgnoringWhitespace(resultPlain);
     }
 
     @Test
     public void testRightComparisonFormatJSONJ() throws Exception {
-        String result = Differ.generate(FILE1_JSON, FILE2_JSON, "json");
+        String result = Differ.generate(String.valueOf(FILE1_JSON), String.valueOf(FILE2_JSON), "json");
+        String result1 = Differ.generate(String.valueOf(FILE1_YAML), String.valueOf(FILE2_YAML), "json");
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode expectedJson = objectMapper.readTree(resultJson);
         JsonNode actualJson = objectMapper.readTree(result);
+        JsonNode actualJson1 = objectMapper.readTree(result1);
         assertThat(actualJson).isEqualTo(expectedJson);
-    }
-
-    @Test
-    public void testRightComparisonFormatJSONY() throws Exception {
-        String result = Differ.generate(FILE1_YAML, FILE2_YAML, "json");
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode expendJson = objectMapper.readTree(resultJson);
-        JsonNode actualJson = objectMapper.readTree(result);
-        assertThat(actualJson).isEqualTo(expendJson);
+        assertThat(actualJson1).isEqualTo(expectedJson);
     }
 }

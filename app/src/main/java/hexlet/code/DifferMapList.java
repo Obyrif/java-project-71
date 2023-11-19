@@ -40,10 +40,8 @@ public class DifferMapList {
                     diff.setValue2(value2);
                 }
             }
-
             diffs.add(diff);
         }
-
         return diffs;
     }
 }

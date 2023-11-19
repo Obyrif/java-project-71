@@ -39,7 +39,7 @@ public class Differ {
         } else if (extension.contains("yml") || extension.contains("yaml")) {
             return "yml";
         } else {
-            throw new RuntimeException("error");
+            throw new RuntimeException("Incorrect format");
         }
     }
 }
