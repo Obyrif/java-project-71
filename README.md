@@ -11,3 +11,5 @@ Utility features:
 
 Support for different input formats: yaml and json
 Report generation in plain text, stylish and json formats
+
+https://asciinema.org/a/DMULtQ1GCjtCyHxUk3Jp20c6K
