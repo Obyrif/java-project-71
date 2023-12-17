@@ -1,48 +1,46 @@
 package hexlet.code;
 
-
+import java.util.Objects;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DifferMapList {
-    public static List<KeyDifference> diffList(Map<String, Object> json1, Map<String, Object> json2) {
-        Map<String, Object> combined = new TreeMap<>();
-        combined.putAll(json1);
-        combined.putAll(json2);
-
-        List<KeyDifference> diffs = new ArrayList<>();
-
-        for (String key : combined.keySet()) {
-            KeyDifference diff = new KeyDifference(key);
-
-            Object value1 = json1.get(key);
-            Object value2 = json2.get(key);
-
-            if (!json2.containsKey(key)) {
-                diff.setStatus("removed");
-                diff.setValue1(value1);
-                diff.setValue2(null);
-            } else if (!json1.containsKey(key)) {
-                diff.setStatus("added");
-                diff.setValue1(null);
-                diff.setValue2(value2);
+    public static List<Map<String, Object>> diffList(Map<String, Object> map1, Map<String, Object> map2) {
+        List<Map<String, Object>> diffList = new ArrayList<>();
+        TreeSet<String> keySet = collectKeysInSet(map1, map2);
+        for (var key : keySet) {
+            Map<String, Object> diffMap = new HashMap<>();
+            if (map1.containsKey(key) && !map2.containsKey(key)) {
+                diffMap.put("FIELD", key);
+                diffMap.put("STATUS", "REMOVED");
+                diffMap.put("OLD_VALUE", map1.get(key));
+            } else if (!map1.containsKey(key) && map2.containsKey(key)) {
+                diffMap.put("FIELD", key);
+                diffMap.put("STATUS", "ADDED");
+                diffMap.put("NEW_VALUE", map2.get(key));
+            } else if (map1.containsKey(key) && map2.containsKey(key) && Objects.equals(map1.get(key), map2.get(key))) {
+                diffMap.put("FIELD", key);
+                diffMap.put("STATUS", "SAME");
+                diffMap.put("OLD_VALUE", map1.get(key));
             } else {
-                if (Objects.equals(value1, value2)) {
-                    diff.setStatus("unchanged");
-                    diff.setValue1(value1);
-                    diff.setValue2(value2);
-                } else {
-                    diff.setStatus("changed");
-                    diff.setValue1(value1);
-                    diff.setValue2(value2);
-                }
+                diffMap.put("FIELD", key);
+                diffMap.put("STATUS", "UPDATED");
+                diffMap.put("OLD_VALUE", map1.get(key));
+                diffMap.put("NEW_VALUE", map2.get(key));
             }
-            diffs.add(diff);
+            diffList.add(diffMap);
         }
-        return diffs;
+        return diffList;
+    }
+
+    public static TreeSet<String> collectKeysInSet(Map<String, Object> map1, Map<String, Object> map2) {
+        return Stream.of(map1, map2)
+                .flatMap(m -> m.keySet().stream())
+                .collect(Collectors.toCollection(TreeSet::new));
     }
 }
-

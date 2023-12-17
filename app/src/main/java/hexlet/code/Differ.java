@@ -19,9 +19,10 @@ public class Differ {
         Map<String, Object> json1 = Parser.parserFiletToMap(p1, p1Format);
         Map<String, Object> json2 = Parser.parserFiletToMap(p2, p2Format);
 
-        List<KeyDifference> result = DifferMapList.diffList(json1, json2);
+        List<Map<String, Object>> result = DifferMapList.diffList(json1, json2);
         return Format.formatComparisonResult(result, format);
     }
+
 
     public static String generate(String js1, String js2) throws Exception {
         return generate(js1, js2, "stylish");

@@ -1,42 +1,42 @@
 package hexlet.code.Formatter;
 
-import hexlet.code.KeyDifference;
-
 import java.util.List;
 import java.util.Map;
 
 public class Plain {
-    public static String plainResult(List<KeyDifference> keyDifferences) {
-        StringBuilder formattedResult = new StringBuilder();
+    private static final String REMOVED = "Property '%s' was removed\n";
+    private static final String ADDED = "Property '%s' was added with value: %s\n";
+    private static final String UPDATED = "Property '%s' was updated. From %s to %s\n";
 
-        for (KeyDifference difference : keyDifferences) {
-            String property = difference.getKey();
-            String value1 = checkValue(difference.getValue1());
-            String value2 = checkValue(difference.getValue2());
-            String status = difference.getStatus();
-
-            if ("removed".equals(status)) {
-                formattedResult.append("Property '").append(property).append("' was removed\n");
-            } else if ("added".equals(status)) {
-                formattedResult.append("Property '").append(property).append("' was added with value: ")
-                        .append(value2).append("\n");
-            } else if ("changed".equals(status)) {
-                formattedResult.append("Property '").append(property).append("' was updated. From ")
-                        .append(value1).append(" to ").append(value2).append("\n");
+    public static String plainResult(List<Map<String, Object>> diffList) {
+        StringBuilder result = new StringBuilder();
+        for (var element : diffList) {
+            switch (element.get("STATUS").toString()) {
+                case "REMOVED" -> result.append(String.format(REMOVED,
+                        element.get("FIELD")));
+                case "ADDED" -> result.append(String.format(ADDED,
+                        element.get("FIELD"),
+                        processingComplexValue(element.get("NEW_VALUE"))));
+                case "SAME" -> { }
+                case "UPDATED" -> result.append(String.format(UPDATED,
+                        element.get("FIELD"),
+                        processingComplexValue(element.get("OLD_VALUE")),
+                        processingComplexValue(element.get("NEW_VALUE"))));
+                default -> throw new RuntimeException("Unexpected status: " + element.get("STATUS"));
             }
         }
-
-        return formattedResult.toString().trim();
+        return result.substring(0, result.length() - 1);
     }
 
-    public static String checkValue(Object value) {
-        if (value == null) {
-            return "null";
-        } else if (value instanceof Map || value instanceof List<?>) {
+    public static String processingComplexValue(Object object) {
+        boolean isComplexValue = object instanceof Map<?, ?> || object instanceof List<?>;
+        boolean isStringObject = object instanceof String;
+        if (isComplexValue) {
             return "[complex value]";
-        } else if (value instanceof String) {
-            return "'" + value + "'";
+        } else if (isStringObject) {
+            return String.format("'%s'", object);
+        } else {
+            return String.valueOf(object);
         }
-        return value.toString();
     }
 }

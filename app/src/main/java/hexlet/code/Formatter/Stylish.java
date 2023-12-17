@@ -1,46 +1,36 @@
 package hexlet.code.Formatter;
-import hexlet.code.KeyDifference;
 
 import java.util.List;
-import java.util.StringJoiner;
+import java.util.Map;
 
 public class Stylish {
-    public static String stylishResult(List<KeyDifference> differences) {
-        StringJoiner joiner = new StringJoiner("\n", "{\n", "\n}");
+    private static final String REMOVED = "  - %s: %s\n";
+    private static final String ADDED = "  + %s: %s\n";
+    private static final String SAME = "    %s: %s\n";
+    private static final String UPDATED = REMOVED + ADDED;
 
-        for (KeyDifference difference : differences) {
-            String status = difference.getStatus();
-            Object oldValue = difference.getValue1();
-            Object newValue = difference.getValue2();
-
-            switch (status) {
-                case "added":
-                    joiner.add("  + " + difference.getKey() + ": " + stringifyValue(newValue));
-                    break;
-                case "removed":
-                    joiner.add("  - " + difference.getKey() + ": " + stringifyValue(oldValue));
-                    break;
-                case "changed":
-                    joiner.add("  - " + difference.getKey() + ": " + stringifyValue(oldValue));
-                    joiner.add("  + " + difference.getKey() + ": " + stringifyValue(newValue));
-                    break;
-                case "unchanged":
-                    joiner.add("    " + difference.getKey() + ": " + stringifyValue(newValue));
-                    break;
-                default:
-                    throw new RuntimeException("Unknown status of element: '" + status + "'");
+    public static String stylishResult(List<Map<String, Object>> diffList) {
+        StringBuilder result = new StringBuilder("{\n");
+        for (var element : diffList) {
+            switch (element.get("STATUS").toString()) {
+                case "REMOVED" -> result.append(String.format(REMOVED,
+                        element.get("FIELD"),
+                        element.get("OLD_VALUE")));
+                case "ADDED" -> result.append(String.format(ADDED,
+                        element.get("FIELD"),
+                        element.get("NEW_VALUE")));
+                case "SAME" -> result.append(String.format(SAME,
+                        element.get("FIELD"),
+                        element.get("OLD_VALUE")));
+                case "UPDATED" -> result.append(String.format(UPDATED,
+                        element.get("FIELD"),
+                        element.get("OLD_VALUE"),
+                        element.get("FIELD"),
+                        element.get("NEW_VALUE")));
+                default -> throw new RuntimeException("Unexpected status: " + element.get("STATUS"));
             }
         }
-        return joiner.toString();
-    }
-
-    private static String stringifyValue(Object value) {
-        if (value instanceof String) {
-            return value.toString();
-        } else if (value == null) {
-            return "null";
-        } else {
-            return value.toString();
-        }
+        result.append("}");
+        return result.toString();
     }
 }
