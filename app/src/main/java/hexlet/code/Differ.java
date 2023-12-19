@@ -34,14 +34,12 @@ public class Differ {
     }
 
     public static String getFormat(String pathFile) {
-        String extension = pathFile.toLowerCase();
-        if (extension.contains("json")) {
-            return "json";
-        } else if (extension.contains("yml") || extension.contains("yaml")) {
-            return "yml";
+        String[] parts = pathFile.split("\\.");
+        if (parts.length > 1) {
+            String extension = parts[parts.length - 1].toLowerCase();
+            return extension;
         } else {
-            throw new RuntimeException("Incorrect format");
+            throw new RuntimeException("Некорректный формат файла");
         }
     }
 }
-

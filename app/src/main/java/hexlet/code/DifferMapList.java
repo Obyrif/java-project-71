@@ -15,18 +15,19 @@ public class DifferMapList {
         TreeSet<String> keySet = collectKeysInSet(map1, map2);
         for (var key : keySet) {
             Map<String, Object> diffMap = new HashMap<>();
-            if (map1.containsKey(key) && !map2.containsKey(key)) {
+
+            if (!map2.containsKey(key)) {
                 diffMap.put("FIELD", key);
                 diffMap.put("STATUS", "REMOVED");
-                diffMap.put("OLD_VALUE", map1.get(key));
-            } else if (!map1.containsKey(key) && map2.containsKey(key)) {
+                diffMap.put("VALUE", map1.get(key));
+            } else if (!map1.containsKey(key)) {
                 diffMap.put("FIELD", key);
                 diffMap.put("STATUS", "ADDED");
-                diffMap.put("NEW_VALUE", map2.get(key));
-            } else if (map1.containsKey(key) && map2.containsKey(key) && Objects.equals(map1.get(key), map2.get(key))) {
+                diffMap.put("VALUE", map2.get(key));
+            } else if (Objects.equals(map1.get(key), map2.get(key))) {
                 diffMap.put("FIELD", key);
                 diffMap.put("STATUS", "SAME");
-                diffMap.put("OLD_VALUE", map1.get(key));
+                diffMap.put("VALUE", map1.get(key));
             } else {
                 diffMap.put("FIELD", key);
                 diffMap.put("STATUS", "UPDATED");

@@ -16,8 +16,8 @@ public class Plain {
                         element.get("FIELD")));
                 case "ADDED" -> result.append(String.format(ADDED,
                         element.get("FIELD"),
-                        processingComplexValue(element.get("NEW_VALUE"))));
-                case "SAME" -> { }
+                        processingComplexValue(element.get("VALUE"))));
+                case "SAME" -> result.append(String.format("Property '%s' is unchanged\n", element.get("FIELD")));
                 case "UPDATED" -> result.append(String.format(UPDATED,
                         element.get("FIELD"),
                         processingComplexValue(element.get("OLD_VALUE")),
@@ -25,7 +25,7 @@ public class Plain {
                 default -> throw new RuntimeException("Unexpected status: " + element.get("STATUS"));
             }
         }
-        return result.substring(0, result.length() - 1);
+        return result.toString();
     }
 
     public static String processingComplexValue(Object object) {
