@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="9.3">
+<file name="/Users/obyrif/Desktop/Repository/java-project-71/app/src/main/java/hexlet/code/Format.java">
+</file>
+<file name="/Users/obyrif/Desktop/Repository/java-project-71/app/src/main/java/hexlet/code/Parser.java">
+</file>
+<file name="/Users/obyrif/Desktop/Repository/java-project-71/app/src/main/java/hexlet/code/Differ.java">
+</file>
+<file name="/Users/obyrif/Desktop/Repository/java-project-71/app/src/main/java/hexlet/code/Formatter/Stylish.java">
+</file>
+<file name="/Users/obyrif/Desktop/Repository/java-project-71/app/src/main/java/hexlet/code/Formatter/Json.java">
+</file>
+<file name="/Users/obyrif/Desktop/Repository/java-project-71/app/src/main/java/hexlet/code/Formatter/Plain.java">
+</file>
+<file name="/Users/obyrif/Desktop/Repository/java-project-71/app/src/main/java/hexlet/code/DifferMapList.java">
+</file>
+<file name="/Users/obyrif/Desktop/Repository/java-project-71/app/src/main/java/hexlet/code/App.java">
+</file>
+</checkstyle>
