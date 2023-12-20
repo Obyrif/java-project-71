@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="TestDiffer" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-12-20T18:03:48" hostname="MacBook-Pro-Dmitrii.local" time="0.286">
+<testsuite name="TestDiffer" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-12-20T18:05:58" hostname="MacBook-Pro-Dmitrii.local" time="0.293">
   <properties/>
-  <testcase name="testRightComparisonFormatJSONJ()" classname="TestDiffer" time="0.255"/>
-  <testcase name="testRightComparison()" classname="TestDiffer" time="0.03"/>
+  <testcase name="testRightComparisonFormatJSONJ()" classname="TestDiffer" time="0.257"/>
+  <testcase name="testRightComparison()" classname="TestDiffer" time="0.035"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

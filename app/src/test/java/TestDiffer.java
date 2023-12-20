@@ -31,10 +31,14 @@ public class TestDiffer {
     public void testRightComparison() throws Exception {
         String jsonFile = Differ.generate(String.valueOf(FILE1_JSON), String.valueOf(FILE2_JSON));
         String yamlFile = Differ.generate(String.valueOf(FILE1_YAML), String.valueOf(FILE2_YAML));
-        String resultDefaultFormatJson = Differ.generate(String.valueOf(FILE1_JSON), String.valueOf(FILE2_JSON), "stylish");
-        String resultDefaultFormatYaml = Differ.generate(String.valueOf(FILE1_YAML), String.valueOf(FILE2_YAML), "stylish");
-        String resultPlainFormatJson = Differ.generate(String.valueOf(FILE1_JSON), String.valueOf(FILE2_JSON), "plain");
-        String resultPlainFormatYaml = Differ.generate(String.valueOf(FILE1_YAML), String.valueOf(FILE2_YAML), "plain");
+        String resultDefaultFormatJson = Differ.generate(String.valueOf(FILE1_JSON),
+                String.valueOf(FILE2_JSON), "stylish");
+        String resultDefaultFormatYaml = Differ.generate(String.valueOf(FILE1_YAML),
+                String.valueOf(FILE2_YAML), "stylish");
+        String resultPlainFormatJson = Differ.generate(String.valueOf(FILE1_JSON),
+                String.valueOf(FILE2_JSON), "plain");
+        String resultPlainFormatYaml = Differ.generate(String.valueOf(FILE1_YAML),
+                String.valueOf(FILE2_YAML), "plain");
         assertThat(jsonFile).isEqualToIgnoringWhitespace(resultStylish);
         assertThat(yamlFile).isEqualToIgnoringWhitespace(resultStylish);
         assertThat(resultDefaultFormatJson).isEqualToIgnoringWhitespace(resultStylish);
