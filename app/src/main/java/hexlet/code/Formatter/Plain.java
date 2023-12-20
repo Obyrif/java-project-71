@@ -20,8 +20,8 @@ public class Plain {
                 case "SAME" -> { }
                 case "UPDATED" -> result.append(String.format(UPDATED,
                         element.get("FIELD"),
-                        processingComplexValue(element.get("OLD_VALUE")),
-                        processingComplexValue(element.get("NEW_VALUE"))));
+                        processingComplexValue(element.get("VALUE1")),
+                        processingComplexValue(element.get("VALUE2"))));
                 default -> throw new RuntimeException("Unexpected status: " + element.get("STATUS"));
             }
         }

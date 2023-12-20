@@ -24,9 +24,9 @@ public class Stylish {
                         element.get("VALUE")));
                 case "UPDATED" -> result.append(String.format(UPDATED,
                         element.get("FIELD"),
-                        element.get("OLD_VALUE"),
+                        element.get("VALUE1"),
                         element.get("FIELD"),
-                        element.get("NEW_VALUE")));
+                        element.get("VALUE2")));
                 default -> throw new RuntimeException("Unexpected status: " + element.get("STATUS"));
             }
         }

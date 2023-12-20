@@ -31,8 +31,8 @@ public class DifferMapList {
             } else {
                 diffMap.put("FIELD", key);
                 diffMap.put("STATUS", "UPDATED");
-                diffMap.put("OLD_VALUE", map1.get(key));
-                diffMap.put("NEW_VALUE", map2.get(key));
+                diffMap.put("VALUE1", map1.get(key));
+                diffMap.put("VALUE2", map2.get(key));
             }
             diffList.add(diffMap);
         }
